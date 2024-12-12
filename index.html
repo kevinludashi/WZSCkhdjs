@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>店铺考核倒计时</title>
+    <style>
+          body {
+                    font-family: 'Arial', sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 20px;
+                    color: #333;
+                }
+                .countdown-card {
+                    background-color: #ffffff;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    padding: 30px;
+                    margin-bottom: 30px;
+                    line-height: 1.6; /* 增加行间距 */
+                }
+                .countdown-card h2 {
+                    margin-top: 0;
+                    color: #333;
+                    border-bottom: 2px solid #e0e0e0;
+                    padding-bottom: 10px;
+                }
+                .countdown-info {
+                    margin-bottom: 15px;
+                    font-size: 18px;
+                }
+                .countdown-info span {
+                    font-weight: bold;
+                    color: #555;
+                }
+                .hidden {
+                    display: none;
+                }
+                .form-section {
+                    background-color: #f8f8f8;
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin-bottom: 30px;
+                }
+                .form-section h2 {
+                    margin-top: 0;
+                    color: #333;
+                    border-bottom: 2px solid #e0e0e0;
+                    padding-bottom: 10px;
+                }
+                .form-section label {
+                    display: block;
+                    margin-top: 15px;
+                }
+                .form-section input[type="text"],
+                .form-section input[type="date"],
+                .form-section input[type="number"] {
+                    width: 100%;
+                    padding: 12px;
+                    margin-top: 5px;
+                    border: 1px solid #ccc;
+                    border-radius: 8px;
+                }
+                .form-section button {
+                    background-color: #2196f3;
+                    color: white;
+                    padding: 12px 24px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    margin-top: 20px;
+                    font-size: 18px;
+                }
+                .form-section button:hover {
+                    background-color: #1976d2;
+                }
+
+    </style>
+</head>
+<body>
+
+<!-- 店铺A的输入表单 -->
+<div>
+    <h2>店铺A考核信息</h2>
+    <label for="storeName1">店铺名:</label>
+    <input type="text" id="storeName1"><br>
+    <label for="assessmentStart1">考核开始日期:</label>
+    <input type="date" id="assessmentStart1"><br>
+    <label for="assessmentEnd1">考核结束日期:</label>
+    <input type="date" id="assessmentEnd1"><br>
+    <label for="completedSales1">已完成销售额(万):</label>
+    <input type="number" id="completedSales1"><br>
+    <label for="targetSales1">考核目标销售额(万):</label>
+    <input type="number" id="targetSales1"><br>
+	 <button onclick="setDefaultInfo(1)">设置默认信息1</button><!-- 默认信息在下方script中修改 -->
+    <button onclick="generateCountdown('1')">生成倒计时</button>
+</div>
+
+<!-- 店铺B的输入表单 -->
+<div>
+    <h2>店铺B考核信息</h2>
+    <label for="storeName2">店铺名:</label>
+    <input type="text" id="storeName2"><br>
+    <label for="assessmentStart2">考核开始日期:</label>
+    <input type="date" id="assessmentStart2"><br>
+    <label for="assessmentEnd2">考核结束日期:</label>
+    <input type="date" id="assessmentEnd2"><br>
+    <label for="completedSales2">已完成销售额(万):</label>
+    <input type="number" id="completedSales2"><br>
+    <label for="targetSales2">考核目标销售额(万):</label>
+    <input type="number" id="targetSales2"><br>
+	 <button onclick="setDefaultInfo(2)">设置默认信息2</button><!-- 默认信息在下方script中修改 -->
+    <!-- 使用内联样式增加按钮的下间距 -->
+    <button onclick="generateCountdown('2')" style="margin-bottom: 20px;">生成倒计时</button>
+
+</div>
+
+<!-- 店铺A的倒计时卡片 -->
+<div id="countdown1" class="countdown-card hidden" >
+    <h2 id="storeNameDisplay1" style="color: #FFB849;"></h2>
+    <div class="countdown-info">
+        <span>考核周期:</span> <span id="assessmentPeriodDisplay1" style="color: #FFB849;"></span><br>
+        <span>考核剩余天数:</span> <span id="remainingDaysDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">天</span><br>
+        <span>考核已完成销售额:</span> <span id="completedSalesDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
+        <span>考核目标销售额:</span> <span id="targetSalesDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
+        <span>考核期完成百分比:</span> <span id="completionPercentageDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">%</span><br>
+        <span>考核差额:</span> <span id="assessmentGapDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span>
+    </div>
+</div>
+
+<!-- 店铺B的倒计时卡片 -->
+<div id="countdown2" class="countdown-card hidden">
+    <h2 id="storeNameDisplay2" style="color: #FFB849;"></h2>
+    <div class="countdown-info">
+        <span>考核周期:</span> <span id="assessmentPeriodDisplay2" style="color: #FFB849;"></span><br>
+        <span>考核剩余天数:</span> <span id="remainingDaysDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">天</span><br>
+        <span>考核已完成销售额:</span> <span id="completedSalesDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
+        <span>考核目标销售额:</span> <span id="targetSalesDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
+        <span>考核期完成百分比:</span> <span id="completionPercentageDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">%</span><br>
+        <span>考核差额:</span> <span id="assessmentGapDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span>
+    </div>
+</div>
+
+<script>
+function generateCountdown(storeId) {
+    var assessmentStart = new Date(document.getElementById('assessmentStart' + storeId).value);
+    var assessmentEnd = new Date(document.getElementById('assessmentEnd' + storeId).value);
+    var completedSales = parseFloat(document.getElementById('completedSales' + storeId).value);
+    var targetSales = parseFloat(document.getElementById('targetSales' + storeId).value);
+    var now = new Date();
+    var remainingDays = Math.ceil((assessmentEnd - now) / (1000 * 60 * 60 * 24));
+    var completionPercentage = (completedSales / targetSales * 100).toFixed(2);
+    var assessmentGap = (targetSales - completedSales).toFixed(2);
+
+    // Update the countdown card with the information
+    document.getElementById('storeNameDisplay' + storeId).textContent = document.getElementById('storeName' + storeId).value;
+    document.getElementById('assessmentPeriodDisplay' + storeId).textContent = assessmentStart.toLocaleDateString() + ' 至 ' + assessmentEnd.toLocaleDateString();
+    document.getElementById('remainingDaysDisplay' + storeId).textContent = remainingDays;
+    document.getElementById('completedSalesDisplay' + storeId).textContent = completedSales;
+    document.getElementById('targetSalesDisplay' + storeId).textContent = targetSales;
+    document.getElementById('completionPercentageDisplay' + storeId).textContent = completionPercentage;
+    document.getElementById('assessmentGapDisplay' + storeId).textContent = assessmentGap;
+
+    // Show the countdown card
+    var countdownDiv = document.getElementById('countdown' + storeId);
+    countdownDiv.classList.remove('hidden');
+}
+
+// Update the countdown every minute
+setInterval(function() {
+    var countdownCards = document.querySelectorAll('.countdown-card:not(.hidden)');
+    countdownCards.forEach(function(card) {
+        var storeId = card.id.replace('countdown', '');
+        generateCountdown(storeId);
+    });
+}, 60000);
+
+ // 设置默认信息的函数
+    function setDefaultInfo(storeId) {
+        if (storeId === 1) {
+            document.getElementById('storeName1').value = '砖筑旗舰店';
+            document.getElementById('assessmentStart1').value = '2024-04-01';
+            document.getElementById('assessmentEnd1').value = '2025-03-31';
+			document.getElementById('targetSales1').value = '48';
+        } else if (storeId === 2) {
+            document.getElementById('storeName2').value = '瓷贝尼旗舰店';
+            document.getElementById('assessmentStart2').value = '2024-05-01';
+            document.getElementById('assessmentEnd2').value = '2025-04-30'; // 注意：4月只有30天
+			document.getElementById('targetSales2').value = '48';
+        }
+    }
+</script>
+
+</body>
+</html>
