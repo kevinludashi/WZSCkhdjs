@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -92,7 +93,8 @@
     <input type="number" id="completedSales1"><br>
     <label for="targetSales1">考核目标销售额(万):</label>
     <input type="number" id="targetSales1"><br>
-	 <button onclick="setDefaultInfo(1)">设置默认信息1</button><!-- 默认信息在下方script中修改 -->
+	 <button onclick="setDefaultInfo('1a')">砖筑-年费返还</button><!-- 默认信息在下方script中修改 -->
+	 <button onclick="setDefaultInfo('1b')">砖筑-日常考核</button><!-- 默认信息在下方script中修改 -->
     <button onclick="generateCountdown('1')">生成倒计时</button>
 </div>
 
@@ -109,7 +111,8 @@
     <input type="number" id="completedSales2"><br>
     <label for="targetSales2">考核目标销售额(万):</label>
     <input type="number" id="targetSales2"><br>
-	 <button onclick="setDefaultInfo(2)">设置默认信息2</button><!-- 默认信息在下方script中修改 -->
+	 <button onclick="setDefaultInfo('2a')">瓷贝尼-年费返还</button><!-- 默认信息在下方script中修改 -->
+	 <button onclick="setDefaultInfo('2b')">瓷贝尼-日常考核</button><!-- 默认信息在下方script中修改 -->
     <!-- 使用内联样式增加按钮的下间距 -->
     <button onclick="generateCountdown('2')" style="margin-bottom: 20px;">生成倒计时</button>
 
@@ -176,19 +179,34 @@ setInterval(function() {
 }, 60000);
 
  // 设置默认信息的函数
-    function setDefaultInfo(storeId) {
-        if (storeId === 1) {
-            document.getElementById('storeName1').value = '砖筑旗舰店';
-            document.getElementById('assessmentStart1').value = '2024-04-01';
-            document.getElementById('assessmentEnd1').value = '2025-03-31';
-			document.getElementById('targetSales1').value = '48';
-        } else if (storeId === 2) {
-            document.getElementById('storeName2').value = '瓷贝尼旗舰店';
-            document.getElementById('assessmentStart2').value = '2024-05-01';
-            document.getElementById('assessmentEnd2').value = '2025-04-30'; // 注意：4月只有30天
-			document.getElementById('targetSales2').value = '48';
-        }
-    }
+     function setDefaultInfo(storeId) {
+         if (storeId === '1a') { // 新增的默认信息1
+             document.getElementById('storeName1').value = '砖筑旗舰店';
+             document.getElementById('assessmentStart1').value = '2024-01-01';
+             document.getElementById('assessmentEnd1').value = '2024-12-31';
+             document.getElementById('completedSales1').value = '0'; // 假设初始已完成销售额为0
+             document.getElementById('targetSales1').value = '36';
+         } else if (storeId === '1b') { // 原有的默认信息1
+             document.getElementById('storeName1').value = '砖筑旗舰店';
+             document.getElementById('assessmentStart1').value = '2024-04-01';
+             document.getElementById('assessmentEnd1').value = '2025-03-31';
+             document.getElementById('completedSales1').value = '0'; // 假设初始已完成销售额为0
+             document.getElementById('targetSales1').value = '48';
+         } else if (storeId === '2a') { // 新增的默认信息2
+             document.getElementById('storeName2').value = '瓷贝尼旗舰店';
+             document.getElementById('assessmentStart2').value = '2024-01-01';
+             document.getElementById('assessmentEnd2').value = '2024-12-31';
+             document.getElementById('completedSales2').value = '0'; // 假设初始已完成销售额为0
+             document.getElementById('targetSales2').value = '36';
+         } else if (storeId === '2b') { // 原有的默认信息2
+             document.getElementById('storeName2').value = '瓷贝尼旗舰店';
+             document.getElementById('assessmentStart2').value = '2024-05-01';
+             document.getElementById('assessmentEnd2').value = '2025-04-30';
+             document.getElementById('completedSales2').value = '0'; // 假设初始已完成销售额为0
+             document.getElementById('targetSales2').value = '48';
+         }
+         // 可以根据需要继续添加更多店铺的默认信息
+     }
 </script>
 
 </body>
