@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -93,6 +94,8 @@
     <input type="number" id="completedSales1"><br>
     <label for="targetSales1">考核目标销售额(万):</label>
     <input type="number" id="targetSales1"><br>
+	<label for="dataUpdateTime1">平台最近数据更新时间:</label>
+	<input type="date" id="dataUpdateDate1"><br>
 	 <button onclick="setDefaultInfo('1a')">砖筑-年费返还</button><!-- 默认信息在下方script中修改 -->
 	 <button onclick="setDefaultInfo('1b')">砖筑-日常考核</button><!-- 默认信息在下方script中修改 -->
     <button onclick="generateCountdown('1')">生成倒计时</button>
@@ -111,6 +114,8 @@
     <input type="number" id="completedSales2"><br>
     <label for="targetSales2">考核目标销售额(万):</label>
     <input type="number" id="targetSales2"><br>
+	<label for="dataUpdateTime2">平台最近数据更新时间:</label>
+	<input type="date" id="dataUpdateDate2"><br>
 	 <button onclick="setDefaultInfo('2a')">瓷贝尼-年费返还</button><!-- 默认信息在下方script中修改 -->
 	 <button onclick="setDefaultInfo('2b')">瓷贝尼-日常考核</button><!-- 默认信息在下方script中修改 -->
     <!-- 使用内联样式增加按钮的下间距 -->
@@ -127,7 +132,9 @@
         <span>考核已完成销售额:</span> <span id="completedSalesDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
         <span>考核目标销售额:</span> <span id="targetSalesDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
         <span>考核期完成百分比:</span> <span id="completionPercentageDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">%</span><br>
-        <span>考核差额:</span> <span id="assessmentGapDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span>
+        <span>考核差额:</span> <span id="assessmentGapDisplay1" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
+		<span>平台最近数据更新时间:</span> <span id="dataUpdateTimeDisplay1" style="color: #FFB849;"></span>
+
     </div>
 </div>
 
@@ -140,7 +147,9 @@
         <span>考核已完成销售额:</span> <span id="completedSalesDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
         <span>考核目标销售额:</span> <span id="targetSalesDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
         <span>考核期完成百分比:</span> <span id="completionPercentageDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">%</span><br>
-        <span>考核差额:</span> <span id="assessmentGapDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span>
+        <span>考核差额:</span> <span id="assessmentGapDisplay2" style="color: #FFB849;"></span><span style="color: #FFB849;">万</span><br>
+		<span>平台最近数据更新时间:</span> <span id="dataUpdateTimeDisplay2" style="color: #FFB849;"></span>
+
     </div>
 </div>
 
@@ -154,6 +163,7 @@ function generateCountdown(storeId) {
     var remainingDays = Math.ceil((assessmentEnd - now) / (1000 * 60 * 60 * 24));
     var completionPercentage = (completedSales / targetSales * 100).toFixed(2);
     var assessmentGap = (targetSales - completedSales).toFixed(2);
+	  var dataUpdateDate = document.getElementById('dataUpdateDate' + storeId).value;
 
     // Update the countdown card with the information
     document.getElementById('storeNameDisplay' + storeId).textContent = document.getElementById('storeName' + storeId).value;
@@ -163,6 +173,8 @@ function generateCountdown(storeId) {
     document.getElementById('targetSalesDisplay' + storeId).textContent = targetSales;
     document.getElementById('completionPercentageDisplay' + storeId).textContent = completionPercentage;
     document.getElementById('assessmentGapDisplay' + storeId).textContent = assessmentGap;
+	  document.getElementById('dataUpdateTimeDisplay' + storeId).textContent = dataUpdateDate;
+
 
     // Show the countdown card
     var countdownDiv = document.getElementById('countdown' + storeId);
